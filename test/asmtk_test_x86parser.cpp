@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <asmjit/x86.h>
 #include "./asmtk.h"
 #include "./cmdline.h"
 
@@ -11,7 +12,7 @@ using namespace asmtk;
 
 struct TestEntry {
   uint64_t baseAddress;
-  uint8_t arch;
+  Arch arch;
   uint8_t mustPass;
   uint8_t asmSize;
   uint8_t mcSize;
@@ -21,7 +22,7 @@ struct TestEntry {
 
 #define X86_PASS(BASE, MACHINE_CODE, ASM_STRING) { \
   BASE,                                            \
-  Environment::kArchX86,                           \
+  Arch::kX86,                                      \
   true,                                            \
   uint8_t(sizeof(ASM_STRING  ) - 1),               \
   uint8_t(sizeof(MACHINE_CODE) - 1),               \
@@ -31,7 +32,7 @@ struct TestEntry {
 
 #define X86_FAIL(BASE, ASM_STRING) {               \
   BASE,                                            \
-  Environment::kArchX86,                           \
+  Arch::kX86,                                      \
   false,                                           \
   uint8_t(sizeof(ASM_STRING  ) - 1),               \
   0,                                               \
@@ -41,7 +42,7 @@ struct TestEntry {
 
 #define X64_PASS(BASE, MACHINE_CODE, ASM_STRING) { \
   BASE,                                            \
-  Environment::kArchX64,                           \
+  Arch::kX64,                                      \
   true,                                            \
   uint8_t(sizeof(ASM_STRING  ) - 1),               \
   uint8_t(sizeof(MACHINE_CODE) - 1),               \
@@ -51,7 +52,7 @@ struct TestEntry {
 
 #define X64_FAIL(BASE, ASM_STRING) {               \
   BASE,                                            \
-  Environment::kArchX64,                           \
+  Arch::kX64,                                      \
   false,                                           \
   uint8_t(sizeof(ASM_STRING  ) - 1),               \
   0,                                               \
@@ -1042,7 +1043,7 @@ static bool runTests(TestStats& out, const TestOptions& options, const TestEntry
 
   for (size_t i = 0; i < count; i++) {
     const TestEntry& entry = entries[i];
-    const char* arch = entry.arch == Environment::kArchX86 ? "X86" : "X64";
+    const char* arch = entry.arch == Arch::kX86 ? "X86" : "X64";
 
     // Initialize Environment with the requested architecture.
     Environment environment;
