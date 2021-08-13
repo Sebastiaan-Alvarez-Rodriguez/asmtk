@@ -1,3 +1,24 @@
+This Repo
+------
+This repo adds meson build to the AsmTK project.  
+It can be compiled with `C++11` and up.  
+It has a dependency on [asmjit](https://github.com/asmjit/asmjit).
+This dependency can be resolved by adding the meson-supported asmjit [here](https://github.com/Sebastiaan-Alvarez-Rodriguez/asmjit):
+Just add the provided git wrap file as `asmjit.wrap` to your project, and let meson do it's magic.
+
+You can use this project as a git wrap, like so:
+```
+[wrap-git]
+https://github.com/Sebastiaan-Alvarez-Rodriguez/asmtk.git
+revision = head
+```
+
+Refer to the next section for links to the original project.  
+All credits for making AsmJit and AsmTK to the original authors. 
+
+From here on, the regular AsmTK README follows.
+
+
 AsmTK
 -----
 
